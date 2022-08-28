@@ -14,6 +14,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - run: dotnet new console --name HarryNugetPublish    
-    - run: dotnet pack ~/test-repo/HarryNugetPublish/HarryNugetPublish.csproj --configuration Release
+    - run: dotnet new console --name AppLogger    
+    - run: dotnet pack ~/test-repo/AppLogger/AppLogger.csproj --configuration Release
     - run: dotnet nuget push "bin/Release/**.nupkg"  --api-key YOUR_GITHUB_PAT --source "github"
