@@ -16,10 +16,18 @@ jobs:
       with:
         dotnet-version: |
           3.1.101
+    - name: Get Package Version No
+      id: PackageVersion
+      run: echo "::set-output name=PackageVersion::$((get-date).ToString("yyyy.MM.dd.HHmm"))"   
+      
+    - run: dotnet pack AppLogger/AppLogger.csproj --no-build -c Release -p:NuspecFile=nuget.nuspec -p:PackageVersion=${{ steps.PackageVersion.outputs.PackageVersion }}
+      
   #  - run: dotnet tool update --global dotnet-ef --version 3.1.101     
    # - run: dotnet nuget remove source https://nuget.pkg.github.com/Himanshu-Parihar/index.json    
-   # - run: dotnet nuget add source https://nuget.pkg.github.com/Himanshu-Parihar/index.json -n github -u Himanshu-Parihar -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text    
-    - run: dotnet new console --name HarryNugetPublish    
-    - run: dotnet pack ./AppLogger/AppLogger.csproj --configuration Release
+    - run: dotnet nuget add source https://nuget.pkg.github.com/Himanshu-Parihar/index.json -name github -username Himanshu-Parihar -password ${{ secrets.NUGET_PUBLISH }} --store-password-in-clear-text    
+   
+   
+   #- run: dotnet new console --name HarryNugetPublish    
+   ## - run: dotnet pack ./AppLogger/AppLogger.csproj --configuration Release
    # - run: dotnet nuget push "bin/Release/**.nupkg" --source "github"
     - run: dotnet nuget push "bin/Release/**.nupkg"  --api-key NUGET_PUBLISH --source "github"
