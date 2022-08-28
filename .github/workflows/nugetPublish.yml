@@ -22,6 +22,8 @@ jobs:
    
    # - run: nuget restore ./AppLogger/AppLogger.csproj   
     
+    - run: dotnet publish AppLogger/AppLogger.csproj -c Release --runtime win-x64 --self-contained --framework net5.0
+
     - run: dotnet pack AppLogger/AppLogger.csproj --no-build -c Release -p:NuspecFile=nuget.nuspec ##-p:PackageVersion=${{ steps.PackageVersion.outputs.PackageVersion }}
       
   #  - run: dotnet tool update --global dotnet-ef --version 3.1.101     
