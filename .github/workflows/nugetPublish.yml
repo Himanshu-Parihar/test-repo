@@ -16,7 +16,7 @@ jobs:
       with:
         dotnet-version: |
           3.1.101
-          6.0.8
+          6.0.0
     - run: dotnet nuget remove source https://nuget.pkg.github.com/Himanshu-Parihar/index.json    
     - run: dotnet nuget add source https://nuget.pkg.github.com/Himanshu-Parihar/index.json -n github -u Himanshu-Parihar -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text    
     - run: dotnet new console --name HarryNugetPublish    
