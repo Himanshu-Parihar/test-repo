@@ -1,0 +1,50 @@
+name: Beam.WebAPI - Build & Pack - ATC
+
+on:
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+    
+  workflow_dispatch:
+
+env:
+  NUGET_PACKAGE_REPO: 'https://nuget.atc-github.azure.cloud.bmw/APAC-Region/index.json'
+  
+jobs:
+  build:
+
+    runs-on: [ atc-ubuntu-latest ]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '5.0.x'    
+    
+    - name: Build BMW.Beam.WebAPI
+      run: dotnet build BMWFS_Applications/BMW.Beam.WebAPI.sln
+      
+    - name: Publish BMW.Beam.WebAPI
+      run: dotnet publish BMWFS_Applications/BMW.Beam.WebAPI2/BMW.Beam.WebAPI2.csproj -c Release --output DeploymentPackage/BMW.Beam.WebAPI/win-x64 --runtime win-x64 --self-contained --framework net5.0
+
+    - name: Get Package Version No
+      id: PackageVersion
+      #run: echo "::set-output name=PackageVersion::$((get-date).ToString("yyyy.MM.dd.HHmm"))"  #HHmmss
+      run: echo "::set-output name=PackageVersion::$(date +'%Y.%m.%d.%H%M')"  #%S
+      
+    - name: Create Nuget
+      run: dotnet pack BMWFS_Applications/BMW.Beam.WebAPI2/BMW.Beam.WebAPI2.csproj --no-build -c Release --runtime win-x64 --output DeploymentPackage -p:NuspecFile=BMW.Beam.WebAPI.nuspec -p:PackageVersion=${{ steps.PackageVersion.outputs.PackageVersion }}
+      
+    - name: Prep Nuget Source - Github Repo    
+      run: dotnet nuget add source ${{ env.NUGET_PACKAGE_REPO}} --name ATCGithubRepo --username ${{ secrets.NUGET_USER}} --password ${{ secrets.NUGET_TOKEN}} --store-password-in-clear-text    
+      #run: |          
+      #  if (!!(dotnet nuget list source | ? { $_ -like "*ATCGithubRepo*"})){
+      #      dotnet nuget remove source ATCGithubRepo
+      #  }
+      #  dotnet nuget add source ${{ env.NUGET_PACKAGE_REPO}} --name ATCGithubRepo --username ${{ secrets.NUGET_USER}} --password ${{ secrets.NUGET_TOKEN}} --store-password-in-clear-text
+            
+    - name: Publish to GitHub packages 
+      run: dotnet nuget push "DeploymentPackage/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN}} --source "ATCGithubRepo"
