@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <PackageId>HarryNugetPublish</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>HimanshuParihar</Authors>
+    <Company>HimanshuPariharCo</Company>
+    <PackageDescription>Library to log in console</PackageDescription>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageTags>Logging, Logger, Log</PackageTags>
+    <RepositoryUrl>https://github.com/Himanshu-Parihar/test-repo</RepositoryUrl>
+  </PropertyGroup>
+  
+
+</Project>
