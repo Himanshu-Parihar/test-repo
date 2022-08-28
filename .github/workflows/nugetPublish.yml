@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: |
-          5.0.x
+          5.8.0
    # - name: Get Package Version No
    #   id: PackageVersion
    #   run: echo "::set-output name=PackageVersion::$((get-date).ToString("yyyy.MM.dd.HHmm"))" 
