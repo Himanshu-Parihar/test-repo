@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>BMW.Beam.WebAPI</id>
+    <version>1.0.0</version>
+    <title>BMW.Beam.WebAPI</title>
+    <authors>BMW FS-AU</authors>
+    <owners>BMW</owners>
+    <description>BMW.Beam.WebAPI Deployment Package.</description>
+    <releaseNotes>This release includes BMW.Beam.WebAPI for Deployment.</releaseNotes>
+    <copyright>Copyright 2022</copyright>    
+    <developmentDependency>true</developmentDependency> 
+	<repository type="git" url="https://atc-github.azure.cloud.bmw/APAC-Region/au-bmwfs_app.git" />
+  </metadata>  
+  
+</package>
